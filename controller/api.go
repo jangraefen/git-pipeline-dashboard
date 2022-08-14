@@ -41,7 +41,7 @@ func (controller *API) GetRepositories(writer http.ResponseWriter, request *http
 			}
 
 			for _, repository := range repositories {
-				if err := fetcher.AddCachedRepository(repository); err != nil {
+				if err := addCachedRepository(repository); err != nil {
 					return nil, err
 				}
 			}
@@ -94,7 +94,12 @@ func (controller *API) GetPipelines(writer http.ResponseWriter, request *http.Re
 			return nil, fmt.Errorf("missing path parameter repositoryID")
 		}
 
-		repository, err := fetcher.GetCachedRepository(repositoryID)
+		repositorySource, ok := mux.Vars(request)["repositorySource"]
+		if !ok {
+			return nil, fmt.Errorf("missing path parameter repositorySource")
+		}
+
+		repository, err := getCachedRepository(repositorySource, repositoryID)
 		if err != nil {
 			return nil, err
 		}
