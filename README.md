@@ -1,6 +1,6 @@
 # git-pipeline-dashboard
 
-[![Build Status](https://img.shields.io/github/workflow/status/jangraefen/git-pipeline-dashboard/Build?logo=GitHub)](https://github.com/jangraefen/git-pipeline-dashboard/actions?query=workflow:Build)
+[![Build Status](https://img.shields.io/github/workflow/status/jangraefen/git-pipeline-dashboard/Build/main?logo=GitHub)](https://github.com/jangraefen/git-pipeline-dashboard/actions?query=workflow:Build%20branch:main)
 [![PkgGoDev](https://pkg.go.dev/badge/mod/github.com/jangraefen/git-pipeline-dashboard)](https://pkg.go.dev/mod/github.com/jangraefen/git-pipeline-dashboard)
 [![Coverage](https://img.shields.io/codecov/c/github/jangraefen/git-pipeline-dashboard?logo=codecov)](https://codecov.io/gh/jangraefen/git-pipeline-dashboard)
 [![Go Report Card](https://goreportcard.com/badge/github.com/jangraefen/git-pipeline-dashboard)](https://goreportcard.com/report/github.com/jangraefen/git-pipeline-dashboard)
@@ -11,6 +11,7 @@ A small dashboard application that provides an overview for git-based CI/CD pipe
 A few alternatives do already exist, but none of them suited my personal needs, especially considering an enterpise context, so I decided to do my own implementation. Maybe it is of use for you aswell 😉.
 
 ## Configuration
+
 Since the dashboard is designed to be served from a container, configuration is mainly done via environment variables.
 
 ```bash
