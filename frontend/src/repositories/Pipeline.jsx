@@ -56,32 +56,22 @@ export default (props) => {
       <Skeleton loaded={initiallyLoaded}>
         <Show when={pipeline.error == null && pipeline() != null && !pipeline().status}>
           <Box class={boxClass() + " " + (pipeline.loading ? styles.updating : "")} borderRadius="$md" p="$3">
-            <Show when={pipeline().pipelineRuns.length > 1}>
-              <Box mt="$2">
-                <Box fontSize="$xs">{summarize(pipeline().commitMessage, 60)}</Box>
-                <Box fontSize="$xs">by {summarize(pipeline().commitAuthor, 60)}</Box>
-              </Box>
-              <HStack spacing="$1" mt="$4">
-                <For each={pipeline().pipelineRuns}>
-                  {(pipelineRun) => (
-                    <Anchor href={pipelineRun.url} external>
-                      <Tag colorScheme={stateToColorScheme(pipelineRun.state)} size="sm" variant="dot">
-                        {pipelineRun.name}
-                      </Tag>
-                    </Anchor>
-                  )}
-                </For>
-              </HStack>
-            </Show>
-            <Show when={pipeline().pipelineRuns.length <= 1}>
-              <Anchor href={pipeline().url} external>
-                <Box mt="$2">
-                  <Box fontSize="$xs">{summarize(pipeline().commitMessage, 60)}</Box>
-                  <Box fontSize="$xs">by {summarize(pipeline().commitAuthor, 60)}</Box>
-                </Box>
-              </Anchor>
-            </Show>
-            <HStack spacing="$1" mt="$4">
+            <Box>
+              <Box fontSize="$xs">{summarize(pipeline().commitMessage, 60)}</Box>
+              <Box fontSize="$xs">by {summarize(pipeline().commitAuthor, 60)}</Box>
+            </Box>
+            <HStack spacing="$1" mt="$2">
+              <For each={pipeline().pipelineRuns}>
+                {(pipelineRun) => (
+                  <Anchor href={pipelineRun.url} external>
+                    <Tag colorScheme={stateToColorScheme(pipelineRun.state)} size="sm" variant="dot">
+                      {pipelineRun.name}
+                    </Tag>
+                  </Anchor>
+                )}
+              </For>
+            </HStack>
+            <HStack spacing="$1" mt="$2">
               <Tag>
                 <TagLeftIcon as={BiRegularCalendar} />
                 <TagLabel fontSize="$2xs">{pipeline().time}</TagLabel>

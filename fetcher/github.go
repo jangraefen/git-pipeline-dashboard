@@ -142,7 +142,7 @@ func (resolver *GithubPipelineResolver) ByRepository(repository *Repository) (*P
 	var pipelineRuns PipelineRunList
 	for _, workflowRun := range latestWorkflowRuns {
 		pipelineRuns = append(pipelineRuns, PipelineRun{
-			Name:  workflowRun.GetName(),
+			Name:  fmt.Sprintf("%s #%d", workflowRun.GetName(), workflowRun.GetID()),
 			State: resolver.toPipelineState(workflowRun.GetStatus()),
 			URL:   workflowRun.GetHTMLURL(),
 		})

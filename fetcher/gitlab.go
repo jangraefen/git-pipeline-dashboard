@@ -1,6 +1,7 @@
 package fetcher
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -133,7 +134,7 @@ func (resolver *GitlabPipelineResolver) ByRepository(repository *Repository) (*P
 		CommitMessage: strings.Trim(strings.SplitN(commit.Message, "\n", 1)[0], "\n\t "),
 		CommitState:   state,
 		PipelineRuns: PipelineRunList{{
-			Name:  ".gitlab-ci.yml",
+			Name:  fmt.Sprintf("Pipeline #%d", pipelineInfo.ID),
 			State: state,
 			URL:   pipelineInfo.WebURL,
 		}},
