@@ -2,13 +2,13 @@ import { Box, Skeleton, VStack } from "@hope-ui/solid"
 import { createReaction, createResource, createSignal, onCleanup, Show, For } from "solid-js"
 import Pipeline from "./Pipeline"
 
-const pipelineFetcher = async (repositoryID) => (await fetch(`/repositories/${repositoryID}`)).json()
+const pipelineFetcher = async ({ repositoryID, repositorySource }) =>
+  (await fetch(`/repositories/${repositorySource}/${repositoryID}`)).json()
 
 export default (props) => {
-  const [pipelines, { refetch: refetchPipelines }] = createResource(() => props.repositoryID, pipelineFetcher)
+  const [pipelines, { refetch: refetchPipelines }] = createResource(() => ({ ...props }), pipelineFetcher)
   const interval = setInterval(refetchPipelines, 1 * 60 * 1000)
   onCleanup(() => clearInterval(interval))
-
 
   const [initiallyLoaded, setInitiallyLoaded] = createSignal(false)
   const loadTracker = createReaction(() => setInitiallyLoaded(true))

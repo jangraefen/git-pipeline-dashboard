@@ -14,7 +14,7 @@ export default (props) => {
         </Box>
       </Anchor>
       <Box mt="$2">
-        <PipelineList repositoryID={props.repository.id} />
+        <PipelineList repositorySource={props.repository.source} repositoryID={props.repository.id} />
       </Box>
     </Box>
   )

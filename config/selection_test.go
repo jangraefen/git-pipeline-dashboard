@@ -5,6 +5,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/jangraefen/git-pipeline-dashboard/fetcher"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,6 +32,8 @@ func TestFromEnvironmentVariables(t *testing.T) {
 
 	selections := FromEnvironmentVariables()
 	assert.Len(t, selections, 1)
+	assert.True(t, selections.ContainsSource(fetcher.SourceTypeGitlab))
+	assert.False(t, selections.ContainsSource(fetcher.SourceTypeGithub))
 	selection := selections[0]
 	assert.Equal(t, selection.Title, "my Selection")
 	assert.Equal(t, selection.Source, "gitlab")
