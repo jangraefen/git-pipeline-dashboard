@@ -1,0 +1,38 @@
+.success {
+  background: linear-gradient(270deg, var(--hope-colors-success6), var(--hope-colors-success8));
+  background-size: 400% 400%;
+}
+
+.failed {
+  background: linear-gradient(270deg, var(--hope-colors-danger6), var(--hope-colors-danger8));
+  background-size: 400% 400%;
+}
+
+.running {
+  background: linear-gradient(270deg, var(--hope-colors-info6), var(--hope-colors-info8));
+  background-size: 400% 400%;
+  animation: pulse 3s infinite;
+}
+
+.unknown {
+  background: linear-gradient(270deg, var(--hope-colors-neutral6), var(--hope-colors-neutral8));
+  background-size: 400% 400%;
+}
+
+.updating {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0 50%;
+  }
+}

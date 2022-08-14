@@ -1,0 +1,132 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - Dockerfile
+      - .gitignore
+      - .editorconfig
+      - .goreleaser.yml
+      - .github/dependabot.yml
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - Dockerfile
+      - .gitignore
+      - .editorconfig
+      - .goreleaser.yml
+      - .github/dependabot.yml
+
+jobs:
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Get frontend dependencies
+        run: yarn --cwd frontend/ install
+      - name: Build frontend
+        run: yarn --cwd frontend/ build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: |
+            frontend/dist
+
+  frontend-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Get frontend dependencies
+        run: yarn --cwd frontend/ install
+      - name: Lint frontend
+        run: yarn --cwd frontend/ run lint
+
+  backend-lint:
+    runs-on: ubuntu-latest
+    needs: frontend-build
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.19
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Download a frontend artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend
+          path: frontend/dist
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.48
+
+  backend-test:
+    runs-on: ${{ matrix.platform }}
+    needs: frontend-build
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.19
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Download a frontend artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend
+          path: frontend/dist
+      - name: Run tests
+        run: go test -v -race -covermode=atomic "-coverprofile=coverprofile.out" ./...
+      - name: Report coverage
+        uses: codecov/codecov-action@v3
+        with:
+          flags: ${{ matrix.platform }}
+          file: coverprofile.out
+          fail_ci_if_error: true
+
+  backend-build:
+    runs-on: ubuntu-latest
+    needs: frontend-build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.19
+      - name: Download a frontend artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend
+          path: frontend/dist
+      - name: Get backend dependencies
+        run: |
+          export GO111MODULE=on
+          go get -v -t -d ./...
+      - name: Build backend
+        run: |
+          export GO111MODULE=on
+          go mod download
+          GOOS=linux   GOARCH=amd64 go build -o bin/hcloud-pricing-exporter-linux-amd64       main.go
+          GOOS=linux   GOARCH=arm64 go build -o bin/hcloud-pricing-exporter-linux-arm64       main.go
+          GOOS=windows GOARCH=amd64 go build -o bin/hcloud-pricing-exporter-windows-amd64.exe main.go

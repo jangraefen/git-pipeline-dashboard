@@ -1,0 +1,9 @@
+.idea
+*.iml
+
+.*.env
+
+__debug_bin.exe
+
+frontend/dist
+frontend/node_modules

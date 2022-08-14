@@ -1,0 +1,30 @@
+linters:
+  enable:
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - bodyclose
+    - dupl
+    - exportloopref
+    - funlen
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - gofmt
+    - goprintffuncname
+    - gosec
+    - prealloc
+    - revive
+    - stylecheck
+    - unconvert
+    - whitespace
+
+linters-settings:
+  govet:
+    check-shadowing: true
+    enable-all: true
+    disable:
+      - fieldalignment
