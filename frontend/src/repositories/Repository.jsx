@@ -1,6 +1,6 @@
 import { Anchor, Box } from "@hope-ui/solid"
 import summarize from "../utils/summarize"
-import Pipeline from "./Pipeline"
+import PipelineList from "../pipelines/PipelineList"
 
 export default (props) => {
   return (
@@ -14,7 +14,7 @@ export default (props) => {
         </Box>
       </Anchor>
       <Box mt="$2">
-        <Pipeline repositoryID={props.repository.id} />
+        <PipelineList repositoryID={props.repository.id} />
       </Box>
     </Box>
   )

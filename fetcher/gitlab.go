@@ -114,16 +114,17 @@ func NewGitlabPipelineResolver(gitlabToken, gitlabEndpoint string) (PipelineReso
 	return &GitlabPipelineResolver{gitlabClient: gitlabClient}, nil
 }
 
-func (resolver *GitlabPipelineResolver) ByRepository(repository *Repository) (*Pipeline, error) {
+func (resolver *GitlabPipelineResolver) ByRepository(repository *Repository) ([]*Pipeline, error) {
 	pipelineInfo, commit, err := getPipelineForRepository(resolver.gitlabClient, repository.ID, repository.DefaultBranch)
 	if err != nil {
 		return nil, err
 	}
 	if pipelineInfo == nil {
-		return nil, nil
+		return []*Pipeline{}, nil
 	}
 
-	return &Pipeline{
+	return []*Pipeline{{
+		Name:          ".gitlab-ci.yml",
 		Ref:           pipelineInfo.Ref,
 		State:         resolver.toPipelineState(pipelineInfo.Status),
 		URL:           pipelineInfo.WebURL,
@@ -131,7 +132,7 @@ func (resolver *GitlabPipelineResolver) ByRepository(repository *Repository) (*P
 		CommitSHA:     pipelineInfo.SHA,
 		CommitAuthor:  commit.AuthorName,
 		CommitMessage: strings.Trim(strings.SplitN(commit.Message, "\n", 1)[0], "\n\t "),
-	}, nil
+	}}, nil
 }
 
 func getPipelineForRepository(git *gitlab.Client, repository, branch string) (*gitlab.PipelineInfo, *gitlab.Commit, error) {

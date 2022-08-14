@@ -36,6 +36,7 @@ type Repository struct {
 
 // Pipeline defines all attributes that define a pipeline state.
 type Pipeline struct {
+	Name          string        `json:"name"`
 	Ref           string        `json:"ref"`
 	State         PipelineState `json:"state"`
 	URL           string        `json:"url"`

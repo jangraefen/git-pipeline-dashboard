@@ -112,31 +112,36 @@ func NewGithubPipelineResolver(githubToken string) (PipelineResolver, error) {
 	return &GithubPipelineResolver{githubClient: github.NewClient(tokenHTTPClient)}, nil
 }
 
-func (resolver *GithubPipelineResolver) ByRepository(repository *Repository) (*Pipeline, error) {
+func (resolver *GithubPipelineResolver) ByRepository(repository *Repository) ([]*Pipeline, error) {
 	workflowRuns, _, err := resolver.githubClient.Actions.ListRepositoryWorkflowRuns(context.TODO(), repository.Namespace, repository.Name, &github.ListWorkflowRunsOptions{Branch: repository.DefaultBranch})
 	if err != nil {
 		return nil, err
 	} else if workflowRuns.GetTotalCount() == 0 {
-		return nil, nil
+		return []*Pipeline{}, nil
 	}
 
-	// TODO: This is still very much flawed, since we do not know, which workflow is actually the one we are interessted in?
-	var latestWorkflowRun *github.WorkflowRun
+	latestWorkflowRuns := make(map[string]*github.WorkflowRun)
 	for _, workflowRun := range workflowRuns.WorkflowRuns {
-		if latestWorkflowRun == nil || workflowRun.GetCreatedAt().After(latestWorkflowRun.GetCreatedAt().Time) {
-			latestWorkflowRun = workflowRun
+		if latestWorkflowRuns[workflowRun.GetName()] == nil || workflowRun.GetCreatedAt().After(latestWorkflowRuns[workflowRun.GetName()].GetCreatedAt().Time) {
+			latestWorkflowRuns[workflowRun.GetName()] = workflowRun
 		}
 	}
 
-	return &Pipeline{
-		Ref:           repository.DefaultBranch,
-		State:         resolver.toPipelineState(latestWorkflowRun.GetStatus()),
-		URL:           latestWorkflowRun.GetHTMLURL(),
-		Time:          latestWorkflowRun.GetUpdatedAt().Format("02.01.2006 15:04"),
-		CommitSHA:     latestWorkflowRun.GetHeadCommit().GetSHA(),
-		CommitAuthor:  latestWorkflowRun.GetHeadCommit().GetAuthor().GetName(),
-		CommitMessage: strings.Trim(strings.SplitN(latestWorkflowRun.GetHeadCommit().GetMessage(), "\n", 1)[0], "\n\t "),
-	}, nil
+	pipelines := make([]*Pipeline, 0, len(latestWorkflowRuns))
+	for _, workflowRun := range latestWorkflowRuns {
+		pipelines = append(pipelines, &Pipeline{
+			Name:          workflowRun.GetName(),
+			Ref:           repository.DefaultBranch,
+			State:         resolver.toPipelineState(workflowRun.GetStatus()),
+			URL:           workflowRun.GetHTMLURL(),
+			Time:          workflowRun.GetUpdatedAt().Format("02.01.2006 15:04"),
+			CommitSHA:     workflowRun.GetHeadCommit().GetSHA(),
+			CommitAuthor:  workflowRun.GetHeadCommit().GetAuthor().GetName(),
+			CommitMessage: strings.Trim(strings.SplitN(workflowRun.GetHeadCommit().GetMessage(), "\n", 1)[0], "\n\t "),
+		})
+	}
+
+	return pipelines, nil
 }
 
 func (resolver *GithubPipelineResolver) toPipelineState(status string) PipelineState {
