@@ -15,5 +15,5 @@ type RepositoryResolver interface {
 // PipelineResolver defines a common API for types that allow for resolving of pipelines.
 type PipelineResolver interface {
 	// ByRepository resolves the pipeline for the given repository identifier and branch identifier.
-	ByRepository(repository *Repository) ([]*Pipeline, error)
+	ByRepository(repository *Repository) (*Pipeline, error)
 }

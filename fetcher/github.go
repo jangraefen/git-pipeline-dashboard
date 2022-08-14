@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -112,36 +113,52 @@ func NewGithubPipelineResolver(githubToken string) (PipelineResolver, error) {
 	return &GithubPipelineResolver{githubClient: github.NewClient(tokenHTTPClient)}, nil
 }
 
-func (resolver *GithubPipelineResolver) ByRepository(repository *Repository) ([]*Pipeline, error) {
-	workflowRuns, _, err := resolver.githubClient.Actions.ListRepositoryWorkflowRuns(context.TODO(), repository.Namespace, repository.Name, &github.ListWorkflowRunsOptions{Branch: repository.DefaultBranch})
+func (resolver *GithubPipelineResolver) ByRepository(repository *Repository) (*Pipeline, error) {
+	workflowRuns, _, err := resolver.githubClient.Actions.ListRepositoryWorkflowRuns(context.TODO(), repository.Namespace, repository.Name, &github.ListWorkflowRunsOptions{
+		Branch: repository.DefaultBranch,
+		Event:  "push",
+	})
 	if err != nil {
 		return nil, err
 	} else if workflowRuns.GetTotalCount() == 0 {
-		return []*Pipeline{}, nil
+		return nil, nil
 	}
 
-	latestWorkflowRuns := make(map[string]*github.WorkflowRun)
+	var latestWorkflowRuns []*github.WorkflowRun
+	lastestCommitTimestamp := time.Unix(0, 0)
+	lastestHeadSHA := ""
+
 	for _, workflowRun := range workflowRuns.WorkflowRuns {
-		if latestWorkflowRuns[workflowRun.GetName()] == nil || workflowRun.GetCreatedAt().After(latestWorkflowRuns[workflowRun.GetName()].GetCreatedAt().Time) {
-			latestWorkflowRuns[workflowRun.GetName()] = workflowRun
+		if workflowRun.GetHeadSHA() == lastestHeadSHA {
+			latestWorkflowRuns = append(latestWorkflowRuns, workflowRun)
+		}
+		if workflowRun.GetHeadCommit().GetTimestamp().After(lastestCommitTimestamp) {
+			latestWorkflowRuns = []*github.WorkflowRun{workflowRun}
+			lastestCommitTimestamp = workflowRun.GetHeadCommit().GetTimestamp().Time
+			lastestHeadSHA = workflowRun.GetHeadSHA()
 		}
 	}
 
-	pipelines := make([]*Pipeline, 0, len(latestWorkflowRuns))
+	var pipelineRuns PipelineRunList
 	for _, workflowRun := range latestWorkflowRuns {
-		pipelines = append(pipelines, &Pipeline{
-			Name:          workflowRun.GetName(),
-			Ref:           repository.DefaultBranch,
-			State:         resolver.toPipelineState(workflowRun.GetStatus()),
-			URL:           workflowRun.GetHTMLURL(),
-			Time:          workflowRun.GetUpdatedAt().Format("02.01.2006 15:04"),
-			CommitSHA:     workflowRun.GetHeadCommit().GetSHA(),
-			CommitAuthor:  workflowRun.GetHeadCommit().GetAuthor().GetName(),
-			CommitMessage: strings.Trim(strings.SplitN(workflowRun.GetHeadCommit().GetMessage(), "\n", 1)[0], "\n\t "),
+		pipelineRuns = append(pipelineRuns, PipelineRun{
+			Name:  workflowRun.GetName(),
+			State: resolver.toPipelineState(workflowRun.GetStatus()),
+			URL:   workflowRun.GetHTMLURL(),
 		})
 	}
+	sort.Sort(pipelineRuns)
 
-	return pipelines, nil
+	return &Pipeline{
+		Ref:           repository.DefaultBranch,
+		URL:           latestWorkflowRuns[0].GetHTMLURL(),
+		Time:          latestWorkflowRuns[0].GetUpdatedAt().Format("02.01.2006 15:04"),
+		CommitSHA:     latestWorkflowRuns[0].GetHeadCommit().GetSHA(),
+		CommitAuthor:  latestWorkflowRuns[0].GetHeadCommit().GetAuthor().GetName(),
+		CommitMessage: strings.Trim(strings.SplitN(latestWorkflowRuns[0].GetHeadCommit().GetMessage(), "\n", 1)[0], "\n\t "),
+		CommitState:   pipelineRuns.GetState(),
+		PipelineRuns:  pipelineRuns,
+	}, nil
 }
 
 func (resolver *GithubPipelineResolver) toPipelineState(status string) PipelineState {

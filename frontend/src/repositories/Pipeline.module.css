@@ -1,21 +1,21 @@
 .success {
-  background: linear-gradient(270deg, var(--hope-colors-success6), var(--hope-colors-success8));
+  background: linear-gradient(270deg, var(--hope-colors-success4), var(--hope-colors-success6));
   background-size: 400% 400%;
 }
 
 .failed {
-  background: linear-gradient(270deg, var(--hope-colors-danger6), var(--hope-colors-danger8));
+  background: linear-gradient(270deg, var(--hope-colors-danger4), var(--hope-colors-danger6));
   background-size: 400% 400%;
 }
 
 .running {
-  background: linear-gradient(270deg, var(--hope-colors-info6), var(--hope-colors-info8));
+  background: linear-gradient(270deg, var(--hope-colors-info4), var(--hope-colors-info6));
   background-size: 400% 400%;
   animation: pulse 3s infinite;
 }
 
 .unknown {
-  background: linear-gradient(270deg, var(--hope-colors-neutral6), var(--hope-colors-neutral8));
+  background: linear-gradient(270deg, var(--hope-colors-neutral4), var(--hope-colors-neutral6));
   background-size: 400% 400%;
 }
 
