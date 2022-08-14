@@ -16,10 +16,11 @@ const stateToStyle = (state) => {
   return styles.unknown
 }
 
-const pipelineFetcher = async (repositoryID) => (await fetch(`/repositories/${repositoryID}`)).json()
+const pipelineFetcher = async ({ repositoryID, repositorySource }) =>
+  (await fetch(`/repositories/${repositorySource}/${repositoryID}`)).json()
 
 export default (props) => {
-  const [pipeline, { refetch: refetchPipeline }] = createResource(() => props.repositoryID, pipelineFetcher)
+  const [pipeline, { refetch: refetchPipeline }] = createResource(() => ({ ...props }), pipelineFetcher)
   const interval = setInterval(refetchPipeline, 1 * 60 * 1000)
   onCleanup(() => clearInterval(interval))
 

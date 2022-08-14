@@ -77,7 +77,7 @@ func main() {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/repositories", apiController.GetRepositories)
-	router.HandleFunc("/repositories/{repositoryID}", apiController.GetPipelines)
+	router.HandleFunc("/repositories/{repositorySource}/{repositoryID}", apiController.GetPipelines)
 	router.PathPrefix("/").Handler(http.FileServer(http.FS(sub)))
 
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", serverAddr, serverPort), router); err != nil {
