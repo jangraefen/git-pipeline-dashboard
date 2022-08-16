@@ -2225,9 +2225,9 @@ v8-compile-cache@^2.0.3:
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
 vite-plugin-eslint@^1.7.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-eslint/-/vite-plugin-eslint-1.8.0.tgz#8e2c6010302769d65f3f9e42fd3acc0958117867"
-  integrity sha512-l6OthdeaSfgDzf1qCkRZfjyQTelqiQefvpfJE9Mikde3CHAjJz5z3oR1mqj4RiOKybitAyYyK3I0AiPTjvEd5A==
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-eslint/-/vite-plugin-eslint-1.8.1.tgz#0381b8272e7f0fd8b663311b64f7608d55d8b04c"
+  integrity sha512-PqdMf3Y2fLO9FsNPmMX+//2BF5SF8nEWspZdgl4kSt7UvHDRHVVfHvxsD7ULYzZrJDGRxR81Nq7TOFgwMnUang==
   dependencies:
     "@rollup/pluginutils" "^4.2.1"
     "@types/eslint" "^8.4.5"
