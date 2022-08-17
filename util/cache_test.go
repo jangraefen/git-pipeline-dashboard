@@ -57,5 +57,4 @@ func TestFetchThroughCache(t *testing.T) {
 	testFetcherErrorToggle.Store(true)
 	_, err = FetchThroughCache(testCache, "err", testFetcher)
 	assert.Error(t, err)
-	testFetcherErrorToggle.Store(false)
 }
