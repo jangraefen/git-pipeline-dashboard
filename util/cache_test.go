@@ -40,7 +40,7 @@ func TestFetchThroughCache(t *testing.T) {
 		return key, nil
 	}
 
-	testCache.Set(context.Background(), "value1", "value1")
+	_ = testCache.Set(context.Background(), "value1", "value1")
 	val, err := FetchThroughCache(testCache, "value1", testFetcher)
 	assert.Equal(t, "value1", val)
 	assert.NoError(t, err)
