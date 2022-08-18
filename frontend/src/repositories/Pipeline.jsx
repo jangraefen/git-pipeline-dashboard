@@ -18,17 +18,13 @@ const stateToStyle = (state) => {
 
 const stateToColorScheme = (state) => {
   if (state === "success") {
-    console.log("colorShema: success")
     return "success"
   } else if (state === "failed") {
-    console.log("colorShema: danger")
     return "danger"
   } else if (state === "running") {
-    console.log("colorShema: info")
     return "info"
   }
 
-  console.log("colorShema: neutral")
   return "neutral"
 }
 
