@@ -3,6 +3,7 @@
 
 .*.env
 
+__debug_bin
 __debug_bin.exe
 
 frontend/dist
