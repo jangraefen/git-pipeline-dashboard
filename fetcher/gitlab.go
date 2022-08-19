@@ -23,11 +23,8 @@ type GitlabRepositoryResolver struct {
 
 func NewGitlabRepositoryResolver(gitlabToken, gitlabEndpoint string) (RepositoryResolver, error) {
 	httpClient := &http.Client{
-		Timeout: 5 * time.Second,
-		Transport: &http.Transport{
-			Proxy: http.ProxyFromEnvironment,
-			// TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		}}
+		Timeout:   5 * time.Second,
+		Transport: &http.Transport{Proxy: http.ProxyFromEnvironment}}
 
 	gitlabClient, err := gitlab.NewClient(
 		gitlabToken,
@@ -97,11 +94,8 @@ type GitlabPipelineResolver struct {
 
 func NewGitlabPipelineResolver(gitlabToken, gitlabEndpoint string) (PipelineResolver, error) {
 	httpClient := &http.Client{
-		Timeout: 5 * time.Second,
-		Transport: &http.Transport{
-			Proxy: http.ProxyFromEnvironment,
-			// TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		}}
+		Timeout:   5 * time.Second,
+		Transport: &http.Transport{Proxy: http.ProxyFromEnvironment}}
 
 	gitlabClient, err := gitlab.NewClient(
 		gitlabToken,

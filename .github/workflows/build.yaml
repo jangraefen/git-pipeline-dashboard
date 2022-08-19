@@ -11,6 +11,7 @@ on:
       - .editorconfig
       - .goreleaser.yml
       - .github/dependabot.yml
+      - .devcontainer/**
   pull_request:
     branches: [main]
     paths-ignore:
@@ -21,6 +22,7 @@ on:
       - .editorconfig
       - .goreleaser.yml
       - .github/dependabot.yml
+      - .devcontainer/**
 
 jobs:
   frontend-build:

@@ -20,10 +20,7 @@ type GithubRepositoryResolver struct {
 }
 
 func NewGithubRepositoryResolver(githubToken string) (RepositoryResolver, error) {
-	httpClient := &http.Client{Transport: &http.Transport{
-		Proxy: http.ProxyFromEnvironment,
-		// TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}}
+	httpClient := &http.Client{Transport: &http.Transport{Proxy: http.ProxyFromEnvironment}}
 
 	ctx := context.WithValue(context.TODO(), oauth2.HTTPClient, httpClient)
 	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: githubToken})
