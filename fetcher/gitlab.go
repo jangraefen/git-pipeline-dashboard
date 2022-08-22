@@ -48,7 +48,10 @@ func (resolver *GitlabRepositoryResolver) ByRepository(repository string) (*Repo
 }
 
 func (resolver *GitlabRepositoryResolver) ByNamespace(namespace string) (RepositoryList, error) {
-	groupProjects, _, err := resolver.gitlabClient.Groups.ListGroupProjects(namespace, &gitlab.ListGroupProjectsOptions{Simple: gitlab.Bool(true)})
+	groupProjects, _, err := resolver.gitlabClient.Groups.ListGroupProjects(namespace, &gitlab.ListGroupProjectsOptions{
+		Simple:   gitlab.Bool(true),
+		Archived: gitlab.Bool(false),
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +65,10 @@ func (resolver *GitlabRepositoryResolver) ByNamespace(namespace string) (Reposit
 }
 
 func (resolver *GitlabRepositoryResolver) ByUser(user string) (RepositoryList, error) {
-	userProjects, _, err := resolver.gitlabClient.Projects.ListUserProjects(user, &gitlab.ListProjectsOptions{Simple: gitlab.Bool(true)})
+	userProjects, _, err := resolver.gitlabClient.Projects.ListUserProjects(user, &gitlab.ListProjectsOptions{
+		Simple:   gitlab.Bool(true),
+		Archived: gitlab.Bool(false),
+	})
 	if err != nil {
 		return nil, err
 	}
