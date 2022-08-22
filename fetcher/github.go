@@ -38,7 +38,9 @@ func (resolver *GithubRepositoryResolver) ByNamespace(namespace string) (Reposit
 
 	var repositoryList RepositoryList
 	for _, repository := range repositories {
-		repositoryList = append(repositoryList, resolver.toRepository(repository))
+		if !repository.GetArchived() {
+			repositoryList = append(repositoryList, resolver.toRepository(repository))
+		}
 	}
 
 	return repositoryList, nil
@@ -73,7 +75,9 @@ func (resolver *GithubRepositoryResolver) ByUser(user string) (RepositoryList, e
 
 	var repositoryList RepositoryList
 	for _, repository := range repositories {
-		repositoryList = append(repositoryList, resolver.toRepository(repository))
+		if !repository.GetArchived() {
+			repositoryList = append(repositoryList, resolver.toRepository(repository))
+		}
 	}
 
 	return repositoryList, nil
