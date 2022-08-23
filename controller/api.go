@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jangraefen/git-pipeline-dashboard/config"
 	"github.com/jangraefen/git-pipeline-dashboard/fetcher"
+	"github.com/jangraefen/git-pipeline-dashboard/util"
 )
 
 type API struct {
@@ -99,17 +100,19 @@ func (controller *API) GetPipelines(writer http.ResponseWriter, request *http.Re
 			return nil, fmt.Errorf("missing path parameter repositorySource")
 		}
 
-		repository, err := getCachedRepository(repositorySource, repositoryID)
-		if err != nil {
-			return nil, err
-		}
+		return util.FetchThroughCache(pipelineCache, getCacheKey(repositorySource, repositoryID), func(key string) (*fetcher.Pipeline, error) {
+			repository, err := getCachedRepository(repositorySource, repositoryID)
+			if err != nil {
+				return nil, err
+			}
 
-		resolver, ok := controller.PipelineResolvers[repository.Source]
-		if !ok {
-			return nil, fmt.Errorf("no resolver registered for source '%s'", repository.Source)
-		}
+			resolver, ok := controller.PipelineResolvers[repository.Source]
+			if !ok {
+				return nil, fmt.Errorf("no resolver registered for source '%s'", repository.Source)
+			}
 
-		return resolver.ByRepository(repository)
+			return resolver.ByRepository(repository)
+		})
 	})(writer, request)
 }
 

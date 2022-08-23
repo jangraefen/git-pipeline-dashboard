@@ -5,18 +5,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/eko/gocache/v3/cache"
-	"github.com/eko/gocache/v3/store"
 	"github.com/jangraefen/git-pipeline-dashboard/fetcher"
-	gocache "github.com/patrickmn/go-cache"
+	"github.com/jangraefen/git-pipeline-dashboard/util"
 )
 
-var repositoryCache = cache.New[*fetcher.Repository](
-	store.NewGoCache(gocache.New(
-		5*time.Minute,
-		10*time.Minute,
-	)),
-)
+var repositoryCache = util.NewCache[*fetcher.Repository](5 * time.Minute)
+var pipelineCache = util.NewCache[*fetcher.Pipeline](1 * time.Minute)
 
 func addCachedRepository(repository *fetcher.Repository) error {
 	return repositoryCache.Set(context.Background(), getCacheKey(repository.Source, repository.ID), repository)
