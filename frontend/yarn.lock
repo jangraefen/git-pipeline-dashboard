@@ -618,10 +618,10 @@ array.prototype.flat@^1.2.5:
     es-abstract "^1.19.2"
     es-shim-unscopables "^1.0.0"
 
-babel-plugin-jsx-dom-expressions@^0.34.7:
-  version "0.34.9"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-dom-expressions/-/babel-plugin-jsx-dom-expressions-0.34.9.tgz#33073999e89330122f5352f4653764685ad42cf2"
-  integrity sha512-MXDbbzq7hjJun7Icxnc9u+SxnArcJ500lKPD6v8cRxi4ul89F1GUwqH47iituB+dWUFFEB8NLiJbh2VN3mlZZQ==
+babel-plugin-jsx-dom-expressions@^0.34.10:
+  version "0.34.10"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-dom-expressions/-/babel-plugin-jsx-dom-expressions-0.34.10.tgz#9a4a79b04f7f6bfcb16706ac0ba0c698829b534d"
+  integrity sha512-YTuTvhpGWuD67JTgb/oFDkQMEzsAG7GKBSl+WNTMkmD9tUBkDNZoKijsDRA2R+zV2VJz2aPaXu3gwPkIIbhMtg==
   dependencies:
     "@babel/helper-module-imports" "7.16.0"
     "@babel/plugin-syntax-jsx" "^7.16.5"
@@ -629,11 +629,11 @@ babel-plugin-jsx-dom-expressions@^0.34.7:
     html-entities "2.3.2"
 
 babel-preset-solid@^1.4.6:
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/babel-preset-solid/-/babel-preset-solid-1.5.5.tgz#8e643556394c2d339902674770e0d08df5963405"
-  integrity sha512-Ang5Dv/G975tHxcvimkit8FeTRU89FWUNY/9kjVBpt+5YVgH5OLjao+qOMoTTS+9JH2jcL5AfsoRa9xQZiY1Cw==
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/babel-preset-solid/-/babel-preset-solid-1.5.6.tgz#e6651b5f2eca6cf22ed977a9c7edac6df6927804"
+  integrity sha512-DETqhEygtRq627y5jII5szev495CvbPZJDTaosCbRWdbBh7nMBPI9JuVBUdWs56M2D4mqYa6Z2vH4mdIS6srwA==
   dependencies:
-    babel-plugin-jsx-dom-expressions "^0.34.7"
+    babel-plugin-jsx-dom-expressions "^0.34.10"
 
 balanced-match@^1.0.0:
   version "1.0.2"
