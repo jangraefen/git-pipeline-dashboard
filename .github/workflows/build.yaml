@@ -129,6 +129,6 @@ jobs:
         run: |
           export GO111MODULE=on
           go mod download
-          GOOS=linux   GOARCH=amd64 go build -o bin/hcloud-pricing-exporter-linux-amd64       main.go
-          GOOS=linux   GOARCH=arm64 go build -o bin/hcloud-pricing-exporter-linux-arm64       main.go
-          GOOS=windows GOARCH=amd64 go build -o bin/hcloud-pricing-exporter-windows-amd64.exe main.go
+          GOOS=linux   GOARCH=amd64 go build -o bin/git-pipeline-dashboard-linux-amd64       main.go
+          GOOS=linux   GOARCH=arm64 go build -o bin/git-pipeline-dashboard-linux-arm64       main.go
+          GOOS=windows GOARCH=amd64 go build -o bin/git-pipeline-dashboard-windows-amd64.exe main.go
