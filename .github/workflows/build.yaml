@@ -64,7 +64,7 @@ jobs:
     needs: frontend-build
     steps:
       - name: Install Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: ^1.19
       - name: Checkout code
@@ -87,7 +87,7 @@ jobs:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - name: Install Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: ^1.19
       - name: Checkout code
@@ -113,7 +113,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: ^1.19
       - name: Download a frontend artifact
