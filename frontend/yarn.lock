@@ -2166,6 +2166,11 @@ semver@^7.0.0, semver@^7.3.7, semver@^7.3.8:
   dependencies:
     lru-cache "^6.0.0"
 
+seroval@^0.5.0:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/seroval/-/seroval-0.5.1.tgz#e6d17365cdaaae7e50815c7e0bcd7102facdadf3"
+  integrity sha512-ZfhQVB59hmIauJG5Ydynupy8KHyr5imGNtdDhbZG68Ufh1Ynkv9KOYOAABf71oVbQxJ8VkWnMHAjEHE7fWkH5g==
+
 shebang-command@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-2.0.0.tgz#ccd0af4f8835fbdc265b82461aaf0c36663f34ea"
@@ -2198,11 +2203,12 @@ solid-icons@^1.0.1:
   integrity sha512-gJTp4in3+OYCs9WvDkSLt4Los2unR3Uoder8wjh15GsfP20xiNOLfPTJllXmn+fI8+k3x7bRYtLGIgWd9fUQug==
 
 solid-js@^1.4.7:
-  version "1.6.10"
-  resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.6.10.tgz#fbd8e0a4adfe7b38da1885170369ede6a1cc7379"
-  integrity sha512-Sf0e6PQCEFkFtbPq0L+93Ua81YQOefBEbvDJ0YXT92b6Lzw0k7UvzSd2l1BbYM+yzE3UmepU1tyMDc/3nIByjA==
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.7.0.tgz#afa0a427a53bae782d2f9d52a4d828bb208865a4"
+  integrity sha512-tLG68KWlVRgzYeAW003G3E70emZqTcqCKJR9QoGr0rcuiLIuKrlUoezT8jLME1YSl3Wfu35jzgeY10iLEY4YQQ==
   dependencies:
     csstype "^3.1.0"
+    seroval "^0.5.0"
 
 solid-refresh@^0.4.1:
   version "0.4.1"
