@@ -7,7 +7,7 @@ require (
 	github.com/google/go-github/v45 v45.2.0
 	github.com/gorilla/mux v1.8.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/stretchr/testify v1.8.1
+	github.com/stretchr/testify v1.8.3
 	github.com/xanzy/go-gitlab v0.79.1
 	go.uber.org/atomic v1.10.0
 	golang.org/x/oauth2 v0.4.0
