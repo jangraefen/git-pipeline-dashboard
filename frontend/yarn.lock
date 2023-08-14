@@ -2222,9 +2222,9 @@ slash@^3.0.0:
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
 solid-icons@^1.0.1:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/solid-icons/-/solid-icons-1.0.4.tgz#13eb122fe927110e2463c96d226492fb837a9802"
-  integrity sha512-gJTp4in3+OYCs9WvDkSLt4Los2unR3Uoder8wjh15GsfP20xiNOLfPTJllXmn+fI8+k3x7bRYtLGIgWd9fUQug==
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/solid-icons/-/solid-icons-1.0.11.tgz#2057b0c3f5c2d91f8bee1a23640b5a5acfb9ccba"
+  integrity sha512-shEL5Otrl73LPZukpanJKi6ISnQhpIvhqqAb8haKyCGrixHOYC6yGfNkSE7jpkKSikZ0rGtSMRiFETRrec2Uzw==
 
 solid-js@^1.4.7:
   version "1.7.8"
