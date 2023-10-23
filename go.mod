@@ -8,7 +8,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/stretchr/testify v1.8.4
-	github.com/xanzy/go-gitlab v0.90.0
+	github.com/xanzy/go-gitlab v0.93.2
 	go.uber.org/atomic v1.11.0
 	golang.org/x/oauth2 v0.11.0
 )
