@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/eko/gocache/v3 v3.1.2
 	github.com/google/go-github/v45 v45.2.0
-	github.com/gorilla/mux v1.8.0
+	github.com/gorilla/mux v1.8.1
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/stretchr/testify v1.8.4
 	github.com/xanzy/go-gitlab v0.90.0
